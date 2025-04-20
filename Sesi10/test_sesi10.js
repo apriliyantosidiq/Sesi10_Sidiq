@@ -9,11 +9,20 @@ describe('Browser Test', function() {
     beforeEach(async function () {
         console.log("Test Case Dimulai")
     });
+
+    afterEach(async function () {
+        console.log("Test Case Selesai")
+    });
     
     it('Visit SauceDemo with Google Chrome and check login', async function () {
+        this.timeout(30000);
+
         options = new chrome.Options();
         options.addArguments("--headless");
-        driver = await new Builder().forBrowser('chrome').build();
+        driver = await new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(options)
+        .build();
 
         await driver.get('https://www.saucedemo.com/');
         const title = await driver.getTitle();
@@ -56,13 +65,17 @@ describe('Browser Test', function() {
         await driver.sleep(2000);
         
         await driver.quit();
-    })
-});
+    });
 
     it ('Visit SauceDemo with Firefox and Check login', async function () {
+        this.timeout(30000);
+
         options = new firefox.Options();
         options.addArguments('--headless');
-        driver = await new Builder().forBrowser('firefox').build();
+        driver = await new Builder()
+        .forBrowser('firefox')
+        .setFirefoxOptions(options)
+        .build();
 
         await driver.get('https://www.saucedemo.com/');
         const title = await driver.getTitle();
@@ -80,32 +93,27 @@ describe('Browser Test', function() {
         let logotext = await textAppLogo.getText();
         assert.strictEqual(title, 'Swag Labs');
 
-            // let buttonCart = await driver.wait(
-            //     until.elementLocated(By.xpath('//*[@id="shopping_cart_container"]/a')),
-            //     2000
-            // );
+        let iconCart = await driver.wait(
+            until.elementLocated(By.xpath('//*[@id="shopping_cart_container"]/a')),
+            2000
+        );
 
-            // await buttonCart.isDisplayed();
-         // Dropdown "Sort By"
-         let dropdown = await driver.wait(
-            until.elementLocated(By.xpath('/html/body/div/div/div/div[1]/div[2]/div/span/select')), 
-            2000);
-
-        let sortDropdown = await driver.findElement(By.xpath('/html/body/div/div/div/div[1]/div[2]/div/span/select'));
-
-        // Sort By "A to Z" 
-        await sortDropdown.findElement(By.xpath('/html/body/div/div/div/div[1]/div[2]/div/span/select/option[1]')).click();
-    
+        await iconCart.isDisplayed();
+        
+        //Dropdown Sort By
+        let dropdwonSort = '/html/body/div/div/div/div[1]/div[2]/div/span/select';
+        let dropdown = await driver.wait(until.elementLocated(By.xpath(dropdwonSort)), 5000);
+           
+        // Sort By "Name (A to Z)"
+        let optionAZ = await driver.findElement(By.xpath('/html/body/div/div/div/div[1]/div[2]/div/span/select/option[1]'));
+        await optionAZ.click();
         await driver.sleep(2000);
 
-        // Sort By "Z to A"
-        await sortDropdown.findElement(By.xpath('/html/body/div/div/div/div[1]/div[2]/div/span/select/option[2]')).click();
-    
+        // Sort By "Name (Z to A)"
+        let optionZA = await driver.findElement(By.xpath('/html/body/div/div/div/div[1]/div[2]/div/span/select/option[2]'));
+        await optionZA.click();
         await driver.sleep(2000);
         
         await driver.quit();
     });
-
-    afterEach(async function () {
-        console.log("Test Case Selesai")
-    });
+});

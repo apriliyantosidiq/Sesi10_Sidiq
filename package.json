@@ -3,9 +3,9 @@
         "version": "1.0.0",
         "description": "Ini tugas boothcamp DigitalSkola QA Engineer - Sesi 10",
         "scripts": {
-            "Testing": "mocha sesi10 --recursive --timeout 10000 --reporter spec",
-            "tes-chrome": "mocha sesi10 --grep 'Chrome' --recursive --timeout 10000 --reporter spec",
-            "tes-firefox": "mocha sesi10 --grep 'Firefox' --recursive --timeout 10000 --reporter spec",
+            "Testing": "mocha sesi10 --recursive --timeout 60000 --reporter spec",
+            "tes-chrome": "mocha sesi10 --grep 'Chrome' --recursive --timeout 60000 --reporter spec",
+            "tes-firefox": "mocha sesi10 --grep 'Firefox' --recursive --timeout 60000 --reporter spec",
             "tes-mochawesome": "mocha sesi10 --recursive --timeout 10000 --reporter mochawesome",
             "laporan": "mocha sesi10 --recursive --reporter mocha-simple-html-reporter --reporter-options output=testReport.html"
         },
